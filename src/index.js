@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import WelcomeScreen from './components/welcome-screen/welcome-screen.jsx';
+import App from './components/app/app.jsx';
 
 function init() {
   ReactDOM.render(
-      <WelcomeScreen />,
+      <App />,
       document.querySelector(`.main`));
 }
 init();
