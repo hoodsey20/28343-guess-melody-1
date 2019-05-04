@@ -3,6 +3,11 @@ import WelcomeScreen from '../welcome-screen/welcome-screen.jsx';
 
 export default class App extends React.Component {
   render() {
-    return <WelcomeScreen />;
+    return (
+      <WelcomeScreen
+        time={7}
+        lives={4}
+      />
+    );
   }
 }
