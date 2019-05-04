@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const WelcomeScreen = ({time, lives}) => {
+const WelcomeScreen = ({gameTime, lives}) => {
   return (
     <section className="welcome">
       <div className="welcome__logo">
@@ -13,7 +13,7 @@ const WelcomeScreen = ({time, lives}) => {
       <h2 className="welcome__rules-title">Правила игры</h2>
       <p className="welcome__text">Правила просты:</p>
       <ul className="welcome__rules-list">
-        <li>За {time} минут нужно ответить на все вопросы.</li>
+        <li>За {gameTime} минут нужно ответить на все вопросы.</li>
         <li>Можно допустить {lives} ошибки.</li>
       </ul>
       <p className="welcome__text">Удачи!</p>
@@ -24,6 +24,6 @@ const WelcomeScreen = ({time, lives}) => {
 export default WelcomeScreen;
 
 WelcomeScreen.propTypes = {
-  time: PropTypes.number.isRequired,
+  gameTime: PropTypes.number.isRequired,
   lives: PropTypes.number.isRequired,
 };
