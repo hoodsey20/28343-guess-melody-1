@@ -3,12 +3,16 @@ import ReactDOM from 'react-dom';
 
 import App from './components/app/app.jsx';
 
-const GAME_TIME = 7;
-const LIVES = 4;
+import {questions, gameSettings} from './mocks/questions';
 
 function init() {
   ReactDOM.render(
-      <App gameTime={GAME_TIME} lives={LIVES} />,
+      <App
+        gameTime={gameSettings.TIME}
+        lives={gameSettings.LIVES}
+        questions={questions}
+      />,
       document.querySelector(`.main`));
 }
+
 init();
