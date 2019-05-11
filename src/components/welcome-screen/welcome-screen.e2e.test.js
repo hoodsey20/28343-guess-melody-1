@@ -6,7 +6,6 @@ import WelcomeScreen from './welcome-screen.jsx';
 
 configure({adapter: new Adapter()});
 
-
 it(`WelcomeScreen once clicked button fired once`, () => {
   const clickHandler = jest.fn();
 
