@@ -90,10 +90,12 @@ exports[`GenreQuestionScreen is rendered correctly 1`] = `
       onSubmit={[Function]}
     >
       <div
-        className="track"
+        className="game__track"
       >
         <button
           className="track__button track__button--play"
+          disabled={true}
+          onClick={[Function]}
           type="button"
         />
         <div
@@ -121,10 +123,12 @@ exports[`GenreQuestionScreen is rendered correctly 1`] = `
         </div>
       </div>
       <div
-        className="track"
+        className="game__track"
       >
         <button
           className="track__button track__button--play"
+          disabled={true}
+          onClick={[Function]}
           type="button"
         />
         <div
@@ -152,10 +156,12 @@ exports[`GenreQuestionScreen is rendered correctly 1`] = `
         </div>
       </div>
       <div
-        className="track"
+        className="game__track"
       >
         <button
           className="track__button track__button--play"
+          disabled={true}
+          onClick={[Function]}
           type="button"
         />
         <div
@@ -183,10 +189,12 @@ exports[`GenreQuestionScreen is rendered correctly 1`] = `
         </div>
       </div>
       <div
-        className="track"
+        className="game__track"
       >
         <button
           className="track__button track__button--play"
+          disabled={true}
+          onClick={[Function]}
           type="button"
         />
         <div

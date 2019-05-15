@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default class GenreQuestionScreen extends React.Component {
+import AudioPlayer from '../audio-player/audio-player.jsx';
+export default class GenreQuestionScreen extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       selectedAnswers: [],
+      activePlayer: -1,
     };
 
     this._handleInputChange = this._handleInputChange.bind(this);
@@ -38,8 +40,8 @@ export default class GenreQuestionScreen extends React.Component {
   }
 
   render() {
+    const {activePlayer} = this.state;
     const {question, onAnswer} = this.props;
-
     const {
       answers,
       genre,
@@ -85,11 +87,14 @@ export default class GenreQuestionScreen extends React.Component {
                 this._getAnswers()
             );
           }}>
-            {answers.map((it, i) => <div className="track" key={`answer-${i}`}>
-              <button className="track__button track__button--play" type="button"/>
-              <div className="track__status">
-                <audio />
-              </div>
+            {answers.map((it, i) => <div className="game__track" key={`answer-${i}`}>
+              <AudioPlayer
+                src={it.src}
+                isPlaying={i === activePlayer}
+                playButtonClickHandler={() => this.setState({
+                  activePlayer: activePlayer === i ? -1 : i
+                })}
+              />
               <div className="game__answer">
                 <input
                   className="game__input visually-hidden"
