@@ -28,13 +28,16 @@ const mock = {
   },
 };
 
+function createNodeMock() {
+  return {};
+}
 
 it(`GenreQuestionScreen is rendered correctly`, () => {
   const {question} = mock;
   const tree = renderer.create(<GenreQuestionScreen
     onAnswer={jest.fn()}
     question={question}
-  />).toJSON();
+  />, {createNodeMock}).toJSON();
 
   expect(tree).toMatchSnapshot();
 });
