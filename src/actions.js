@@ -27,6 +27,8 @@ export const ActionCreator = {
     payload: 1,
   }),
 
+  reset: () => ({type: RESET}),
+
   incrementMistake: (userAnswer, question, mistakes, maxMistakes) => {
     let answerIsCorrect = false;
 

@@ -6,6 +6,8 @@ import {App} from './app.jsx';
 const mock = {
   gameTime: 5,
   lives: 10,
+  question: -1,
+  mistakes: 0,
   questions: [
     {
       type: `genre`,
@@ -33,11 +35,16 @@ const mock = {
 };
 
 it(`App is rendered correctly`, () => {
-  const {gameTime, lives, questions} = mock;
+  const {gameTime, lives, questions, question, mistakes} = mock;
   const tree = renderer.create(<App
     gameTime={gameTime}
     lives={lives}
     questions={questions}
+    question={question}
+    mistakes={mistakes}
+    handleWelcomeScreen={jest.fn()}
+    handleUserAnswer={jest.fn()}
+    handleReset={jest.fn()}
   />).toJSON();
 
   expect(tree).toMatchSnapshot();
