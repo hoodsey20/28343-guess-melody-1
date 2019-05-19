@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 
 import WelcomeScreen from '../welcome-screen/welcome-screen.jsx';
 import ArtistQuestionScreen from '../artist-question-screen/artist-question-screen.jsx';
 import GenreQuestionScreen from '../genre-question-screen/genre-question-screen.jsx';
 
-export default class App extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
 
@@ -65,6 +66,7 @@ export default class App extends React.Component {
 
     return null;
   }
+
   render() {
     const {questions} = this.props;
     const {question} = this.state;
@@ -106,3 +108,12 @@ App.propTypes = {
       )
   ).isRequired,
 };
+
+export {App};
+
+const mapStateToProps = (state, ownProps) => ({
+  question: state.question,
+  mistakes: state.mistakes,
+});
+
+export default connect(mapStateToProps)(App);

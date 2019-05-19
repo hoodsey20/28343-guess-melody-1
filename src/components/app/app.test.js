@@ -1,7 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 
-import App from './app.jsx';
+import {App} from './app.jsx';
 
 const mock = {
   gameTime: 5,
