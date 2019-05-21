@@ -1,85 +1,87 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 
+import {ActionCreator} from '../../actions';
 import WelcomeScreen from '../welcome-screen/welcome-screen.jsx';
 import ArtistQuestionScreen from '../artist-question-screen/artist-question-screen.jsx';
 import GenreQuestionScreen from '../genre-question-screen/genre-question-screen.jsx';
+import GameHeader from '../game-header/game-header.jsx';
 
-export default class App extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      question: -1,
-    };
-
-    this._handleChangeScreen = this._handleChangeScreen.bind(this);
+    this._handleWelcomeScreen = this._handleWelcomeScreen.bind(this);
+    this._handleUserAnswer = this._handleUserAnswer.bind(this);
   }
 
-  _handleChangeScreen() {
-    const {questions} = this.props;
-    const {question} = this.state;
-
-    this.setState({
-      question: question + 1 >= questions.length
-        ? -1
-        : question + 1,
-    });
+  _handleWelcomeScreen() {
+    this.props.handleWelcomeScreen();
   }
 
-  _getScreen(question) {
-    if (!question) {
-      const {
-        lives,
-        gameTime,
-      } = this.props;
+  _handleUserAnswer(answer) {
+    const {questions, question, mistakes, lives, handleUserAnswer} = this.props;
 
+    handleUserAnswer(answer, questions[question], mistakes, lives);
+  }
+
+  _getScreen(questions, question) {
+    const {handleReset, mistakes, lives, gameTime} = this.props;
+    const isNoMoreQuestions = questions.length <= question;
+    const currentQuestion = questions[question];
+
+    if (isNoMoreQuestions) {
+      handleReset();
+      return null;
+    }
+
+    if (!currentQuestion) {
       return <WelcomeScreen
         lives={lives}
         gameTime={gameTime}
-        onClick={this._handleChangeScreen}
+        onClick={this._handleWelcomeScreen}
       />;
     }
 
-    switch (question.type) {
-      case `genre`: return <GenreQuestionScreen
-        question={question}
-        onAnswer={(answer) => {
-          /*eslint-disable*/
-					console.log(`ответ: `, answer)
-          /*eslint-disable*/
-          this._handleChangeScreen();
-        }}
-      />;
+    switch (currentQuestion.type) {
+      case `genre`: return (
+        <GenreQuestionScreen
+          question={currentQuestion}
+          onAnswer={this._handleUserAnswer}
+        >
+          <GameHeader mistakes={mistakes} />
+        </GenreQuestionScreen>
+      );
 
-      case `artist`: return <ArtistQuestionScreen
-        question={question}
-        onAnswer={(answer) => {
-          /*eslint-disable*/
-					console.log(`ответ: `, answer)
-          /*eslint-disable*/
-          this._handleChangeScreen();
-        }}
-      />;
+      case `artist`: return (<ArtistQuestionScreen
+        question={currentQuestion}
+        onAnswer={this._handleUserAnswer}
+      >
+        <GameHeader mistakes={mistakes} />
+      </ArtistQuestionScreen>
+      );
     }
 
     return null;
   }
+
   render() {
-    const {questions} = this.props;
-    const {question} = this.state;
+    const {questions, question} = this.props;
 
     return (
       <React.Fragment>
-        {this._getScreen(questions[question])}
+        {this._getScreen(questions, question)}
       </React.Fragment>
     );
   }
 }
 
 App.propTypes = {
+  question: PropTypes.number.isRequired,
   gameTime: PropTypes.number.isRequired,
   lives: PropTypes.number.isRequired,
+  mistakes: PropTypes.number.isRequired,
   questions: PropTypes.arrayOf(
       PropTypes.oneOfType(
           [
@@ -105,4 +107,32 @@ App.propTypes = {
           ]
       )
   ).isRequired,
+  handleWelcomeScreen: PropTypes.func.isRequired,
+  handleUserAnswer: PropTypes.func.isRequired,
+  handleReset: PropTypes.func.isRequired,
 };
+
+export {App};
+
+const mapStateToProps = (state) => ({
+  question: state.question,
+  mistakes: state.mistakes,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  handleWelcomeScreen: () => dispatch(ActionCreator.incrementStep()),
+
+  handleUserAnswer: (userAnswer, question, mistakes, maxMistakes) => {
+    dispatch(ActionCreator.incrementStep());
+    dispatch(ActionCreator.incrementMistake(
+        userAnswer,
+        question,
+        mistakes,
+        maxMistakes
+    ));
+  },
+
+  handleReset: () => dispatch(ActionCreator.reset())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
