@@ -14,8 +14,6 @@ const withUserAnswer = (Component) => {
     }
 
     _handleInputChange(evt, selectedId) {
-      console.log('evt.target.value', evt.target.value);
-      console.log('evt.target.checked', evt.target.checked);
       const {selectedAnswers} = this.state;
 
       if (evt.target.checked) {

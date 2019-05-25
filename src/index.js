@@ -5,9 +5,12 @@ import {Provider} from 'react-redux';
 import {logger} from 'redux-logger';
 
 import App from './components/app/app.jsx';
+import withScreenSwitch from './hocs/with-screen-switch/with-screen-switch';
+
 import {reducer} from './reducer';
 import {questions, gameSettings} from './mocks/questions';
 
+const AppWithScreenSwitch = withScreenSwitch(App);
 const middlewares = [logger];
 
 function init() {
@@ -18,7 +21,7 @@ function init() {
 
   ReactDOM.render(
       <Provider store={store}>
-        <App
+        <AppWithScreenSwitch
           gameTime={gameSettings.TIME}
           lives={gameSettings.LIVES}
           questions={questions}
