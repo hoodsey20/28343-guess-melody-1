@@ -37,6 +37,8 @@ it(`onAnswer handler fired for every selected variant`, () => {
     <ArtistQuestionScreen
       onAnswer={onAnswer}
       question={question}
+      playButtonHandler={jest.fn}
+      activePlayer={-1}
     />
   ));
 

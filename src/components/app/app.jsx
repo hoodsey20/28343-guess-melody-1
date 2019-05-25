@@ -9,9 +9,10 @@ import GenreQuestionScreen from '../genre-question-screen/genre-question-screen.
 import GameHeader from '../game-header/game-header.jsx';
 
 import withActivePlayer from '../../hocs/with-active-player/with-active-player';
+import withUserAnswer from '../../hocs/with-user-answer/with-user-answer';
 
-const GenreQuestionScreenWithActivePlayer = withActivePlayer(
-    GenreQuestionScreen
+const GenreQuestionScreenWrapped = withUserAnswer(
+    withActivePlayer(GenreQuestionScreen)
 );
 
 const ArtistQuestionScreenWithActivePlayer = withActivePlayer(
@@ -56,12 +57,12 @@ class App extends React.Component {
 
     switch (currentQuestion.type) {
       case `genre`: return (
-        <GenreQuestionScreenWithActivePlayer
+        <GenreQuestionScreenWrapped
           question={currentQuestion}
-          onAnswer={this._handleUserAnswer}
+          answerHandler={this._handleUserAnswer}
         >
           <GameHeader mistakes={mistakes} />
-        </GenreQuestionScreenWithActivePlayer>
+        </GenreQuestionScreenWrapped>
       );
 
       case `artist`: return (<ArtistQuestionScreenWithActivePlayer

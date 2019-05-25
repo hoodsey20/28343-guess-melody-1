@@ -23,8 +23,11 @@ it(`When user answers genre question form is not sent`, () => {
   const {question} = mock;
   const onAnswer = jest.fn();
   const genreQuestion = mount(<GenreQuestionScreen
-    onAnswer={onAnswer}
     question={question}
+    activePlayer={-1}
+    answerHandler={onAnswer}
+    playButtonHandler={jest.fn()}
+    handleInputChange={jest.fn()}
   />);
 
   const form = genreQuestion.find(`form`);

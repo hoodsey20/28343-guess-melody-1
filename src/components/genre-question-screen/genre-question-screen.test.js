@@ -35,8 +35,11 @@ function createNodeMock() {
 it(`GenreQuestionScreen is rendered correctly`, () => {
   const {question} = mock;
   const tree = renderer.create(<GenreQuestionScreen
-    onAnswer={jest.fn()}
     question={question}
+    activePlayer={-1}
+    answerHandler={jest.fn()}
+    playButtonHandler={jest.fn()}
+    handleInputChange={jest.fn()}
   />, {createNodeMock}).toJSON();
 
   expect(tree).toMatchSnapshot();

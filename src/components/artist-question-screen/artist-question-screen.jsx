@@ -10,7 +10,8 @@ const ArtistQuestionScreen = ({
   onAnswer,
   children,
   activePlayer,
-  playButtonHandler}) => {
+  playButtonHandler
+}) => {
   const {
     answers,
     type,

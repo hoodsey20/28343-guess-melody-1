@@ -16,7 +16,7 @@ MockComponent.propTypes = {
 
 const MockComponentWithAudio = withAudio(MockComponent);
 
-it(`AudioPlayer: player button correctly switches isPlaying status`, () => {
+it(`WithAudio: player button correctly switches isPlaying status`, () => {
   const playButtonClickHandler = jest.fn();
 
   const mockAudio = `https://upload.wikimedia.org/wikipedia/commons/1/1f/Uganda_flag_and_national_anthem_-_Oh_Uganda_Land_o.ogg`;

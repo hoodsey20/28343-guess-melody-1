@@ -36,6 +36,8 @@ it(`ArtistQuestionScreen is rendered correctly`, () => {
   const tree = renderer.create(<ArtistQuestionScreen
     onAnswer={jest.fn()}
     question={question}
+    playButtonHandler={jest.fn}
+    activePlayer={-1}
   />, {createNodeMock}).toJSON();
 
   expect(tree).toMatchSnapshot();
