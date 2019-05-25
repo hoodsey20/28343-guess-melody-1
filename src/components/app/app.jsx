@@ -8,6 +8,16 @@ import ArtistQuestionScreen from '../artist-question-screen/artist-question-scre
 import GenreQuestionScreen from '../genre-question-screen/genre-question-screen.jsx';
 import GameHeader from '../game-header/game-header.jsx';
 
+import withActivePlayer from '../../hocs/with-active-player/with-active-player';
+
+const GenreQuestionScreenWithActivePlayer = withActivePlayer(
+    GenreQuestionScreen
+);
+
+const ArtistQuestionScreenWithActivePlayer = withActivePlayer(
+    ArtistQuestionScreen
+);
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -46,20 +56,20 @@ class App extends React.Component {
 
     switch (currentQuestion.type) {
       case `genre`: return (
-        <GenreQuestionScreen
+        <GenreQuestionScreenWithActivePlayer
           question={currentQuestion}
           onAnswer={this._handleUserAnswer}
         >
           <GameHeader mistakes={mistakes} />
-        </GenreQuestionScreen>
+        </GenreQuestionScreenWithActivePlayer>
       );
 
-      case `artist`: return (<ArtistQuestionScreen
+      case `artist`: return (<ArtistQuestionScreenWithActivePlayer
         question={currentQuestion}
         onAnswer={this._handleUserAnswer}
       >
         <GameHeader mistakes={mistakes} />
-      </ArtistQuestionScreen>
+      </ArtistQuestionScreenWithActivePlayer>
       );
     }
 

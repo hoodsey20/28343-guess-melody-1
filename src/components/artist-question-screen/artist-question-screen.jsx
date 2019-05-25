@@ -4,53 +4,50 @@ import PropTypes from 'prop-types';
 import Player from '../player/player.jsx';
 import withAudio from '../../hocs/with-audio/with-audio';
 const PlayerWithAudio = withAudio(Player);
-export default class ArtistQuestionScreen extends React.PureComponent {
-  constructor() {
-    super();
-    this.state = {
-      isPlaying: false,
-    };
-  }
 
-  render() {
-    const {isPlaying} = this.state;
-    const {question, onAnswer, children} = this.props;
-    const {
-      answers,
-      type,
-      song,
-    } = question;
-    return (
-      <section className={`game game--${type}`}>
-        {children}
-        <section className="game__screen">
-          <h2 className="game__title">Кто исполняет эту песню?</h2>
-          <PlayerWithAudio
-            src={song.src}
-            isPlaying={isPlaying}
-            playButtonClickHandler={() => this.setState({isPlaying: !this.state.isPlaying})}
-          />
+const ArtistQuestionScreen = ({
+  question,
+  onAnswer,
+  children,
+  activePlayer,
+  playButtonHandler}) => {
+  const {
+    answers,
+    type,
+    song,
+  } = question;
 
-          <form className="game__artist">
-            {answers.map((it, i) => <div className="artist" key={i}>
-              <input
-                className="artist__input visually-hidden"
-                type="radio" name="answer"
-                value={`artist-${i}`}
-                id={`artist-${i}`}
-                onChange={() => onAnswer(it)}
-              />
-              <label className="artist__name" htmlFor={`artist-${i}`}>
-                <img className="artist__picture" src={it.picture} alt={it.artist} />
-                {it.artist}
-              </label>
-            </div>)}
-          </form>
-        </section>
+  return (
+    <section className={`game game--${type}`}>
+      {children}
+      <section className="game__screen">
+        <h2 className="game__title">Кто исполняет эту песню?</h2>
+        <PlayerWithAudio
+          src={song.src}
+          isPlaying={(activePlayer === 0)}
+          playButtonClickHandler={() => playButtonHandler(0)}
+        />
+
+        <form className="game__artist">
+          {answers.map((it, i) => <div className="artist" key={i}>
+            <input
+              className="artist__input visually-hidden"
+              type="radio" name="answer"
+              value={`artist-${i}`}
+              id={`artist-${i}`}
+              onChange={() => onAnswer(it)}
+            />
+            <label className="artist__name" htmlFor={`artist-${i}`}>
+              <img className="artist__picture" src={it.picture} alt={it.artist} />
+              {it.artist}
+            </label>
+          </div>)}
+        </form>
       </section>
-    );
-  }
-}
+    </section>
+  );
+};
+
 
 ArtistQuestionScreen.propTypes = {
   onAnswer: PropTypes.func.isRequired,
@@ -68,5 +65,9 @@ ArtistQuestionScreen.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.element,
     PropTypes.arrayOf(PropTypes.element)
-  ])
+  ]),
+  activePlayer: PropTypes.number.isRequired,
+  playButtonHandler: PropTypes.func.isRequired,
 };
+
+export default ArtistQuestionScreen;

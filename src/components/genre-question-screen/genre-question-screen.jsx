@@ -10,7 +10,6 @@ export default class GenreQuestionScreen extends React.PureComponent {
     super(props);
     this.state = {
       selectedAnswers: [],
-      activePlayer: -1,
     };
 
     this._handleInputChange = this._handleInputChange.bind(this);
@@ -43,8 +42,7 @@ export default class GenreQuestionScreen extends React.PureComponent {
   }
 
   render() {
-    const {activePlayer} = this.state;
-    const {question, onAnswer, children} = this.props;
+    const {question, onAnswer, activePlayer, children, playButtonHandler} = this.props;
     const {
       answers,
       genre,
@@ -66,9 +64,7 @@ export default class GenreQuestionScreen extends React.PureComponent {
               <PlayerWithAudio
                 src={it.src}
                 isPlaying={i === activePlayer}
-                playButtonClickHandler={() => this.setState({
-                  activePlayer: activePlayer === i ? -1 : i
-                })}
+                playButtonClickHandler={() => playButtonHandler(i)}
               />
               <div className="game__answer">
                 <input
@@ -107,5 +103,8 @@ GenreQuestionScreen.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.element,
     PropTypes.arrayOf(PropTypes.element)
-  ])
+  ]),
+  activePlayer: PropTypes.number.isRequired,
+  playButtonHandler: PropTypes.func.isRequired,
 };
+
