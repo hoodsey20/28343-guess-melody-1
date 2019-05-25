@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {createStore, applyMiddleware} from 'redux';
+import {createStore, applyMiddleware, compose} from 'redux';
 import {Provider} from 'react-redux';
 import {logger} from 'redux-logger';
 
@@ -8,11 +8,13 @@ import App from './components/app/app.jsx';
 import {reducer} from './reducer';
 import {questions, gameSettings} from './mocks/questions';
 
+const middlewares = [logger];
+
 function init() {
-  const store = createStore(
-      reducer,
-      applyMiddleware(logger)
-  );
+  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+  const store = createStore(reducer, composeEnhancers(
+      applyMiddleware(...middlewares)
+  ));
 
   ReactDOM.render(
       <Provider store={store}>

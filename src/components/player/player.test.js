@@ -1,7 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 
-import AudioPlayer from './audio-player.jsx';
+import AudioPlayer from './player.jsx';
 
 it(`AudioPlayer is rendered correctly`, () => {
   const playButtonClickHandler = jest.fn();
@@ -14,8 +14,10 @@ it(`AudioPlayer is rendered correctly`, () => {
 
   const tree = renderer.create(<AudioPlayer
     isPlaying={false}
+    isLoading={true}
     src={mockAudio}
     playButtonClickHandler={playButtonClickHandler}
+    renderAudio={() => <div/>}
   />, {createNodeMock}).toJSON();
 
   expect(tree).toMatchSnapshot();

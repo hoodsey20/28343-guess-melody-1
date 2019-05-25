@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import AudioPlayer from '../audio-player/audio-player.jsx';
-
+import Player from '../player/player.jsx';
+import withAudio from '../../hocs/with-audio/with-audio';
+const PlayerWithAudio = withAudio(Player);
 export default class ArtistQuestionScreen extends React.PureComponent {
   constructor() {
     super();
@@ -24,7 +25,7 @@ export default class ArtistQuestionScreen extends React.PureComponent {
         {children}
         <section className="game__screen">
           <h2 className="game__title">Кто исполняет эту песню?</h2>
-          <AudioPlayer
+          <PlayerWithAudio
             src={song.src}
             isPlaying={isPlaying}
             playButtonClickHandler={() => this.setState({isPlaying: !this.state.isPlaying})}

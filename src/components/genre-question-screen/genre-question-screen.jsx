@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import AudioPlayer from '../audio-player/audio-player.jsx';
+import Player from '../player/player.jsx';
+import withAudio from '../../hocs/with-audio/with-audio';
+const PlayerWithAudio = withAudio(Player);
+
 export default class GenreQuestionScreen extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -60,7 +63,7 @@ export default class GenreQuestionScreen extends React.PureComponent {
             );
           }}>
             {answers.map((it, i) => <div className="game__track" key={`answer-${i}`}>
-              <AudioPlayer
+              <PlayerWithAudio
                 src={it.src}
                 isPlaying={i === activePlayer}
                 playButtonClickHandler={() => this.setState({

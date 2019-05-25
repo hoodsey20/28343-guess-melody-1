@@ -1,10 +1,20 @@
 import React from 'react';
 import {configure, mount} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import PropTypes from 'prop-types';
 
-import AudioPlayer from './audio-player.jsx';
+import withAudio from './with-audio';
 
 configure({adapter: new Adapter()});
+
+const MockComponent = ({playButtonClickHandler}) =>
+  <button className="track__button" onClick={playButtonClickHandler}></button>;
+
+MockComponent.propTypes = {
+  playButtonClickHandler: PropTypes.func.isRequired
+};
+
+const MockComponentWithAudio = withAudio(MockComponent);
 
 it(`AudioPlayer: player button correctly switches isPlaying status`, () => {
   const playButtonClickHandler = jest.fn();
@@ -13,7 +23,7 @@ it(`AudioPlayer: player button correctly switches isPlaying status`, () => {
 
   window.HTMLMediaElement.prototype.pause = () => {};
 
-  const wrapper = mount(<AudioPlayer
+  const wrapper = mount(<MockComponentWithAudio
     isPlaying={false}
     src={mockAudio}
     playButtonClickHandler={playButtonClickHandler}
