@@ -44,7 +44,7 @@ const withAudio = (Component) => {
         });
 
         audio.ontimeupdate = () => this.setState({
-          progress: audio.currentTime
+          progress: Math.ceil(audio.currentTime)
         });
       }
     }
